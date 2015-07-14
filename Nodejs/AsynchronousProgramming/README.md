@@ -1,1 +1,1 @@
-http://darrenderidder.github.io/talks/ModulePatterns
+http://goye.github.io/Nodejs/AsynchronousProgramming
