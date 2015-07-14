@@ -1,0 +1,68 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'link' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.35
+4 verbose linkPkg /Users/carlosalbertogoyenecheovalle/sites/workshopper
+5 verbose link build target /usr/local/lib/node_modules/test-workshopper
+6 verbose install where,what [ '/Users/carlosalbertogoyenecheovalle/sites/workshopper', [] ]
+7 verbose readDependencies using package.json deps
+8 verbose install where, deps [ '/Users/carlosalbertogoyenecheovalle/sites/workshopper',
+8 verbose install   [ 'workshopper' ] ]
+9 info preinstall test-workshopper@1.0.0
+10 verbose readDependencies using package.json deps
+11 verbose already installed skipping workshopper@^2.6.0 /Users/carlosalbertogoyenecheovalle/sites/workshopper
+12 silly resolved []
+13 info build /Users/carlosalbertogoyenecheovalle/sites/workshopper
+14 verbose linkStuff [ false,
+14 verbose linkStuff   false,
+14 verbose linkStuff   false,
+14 verbose linkStuff   '/Users/carlosalbertogoyenecheovalle/sites' ]
+15 info linkStuff test-workshopper@1.0.0
+16 verbose linkBins test-workshopper@1.0.0
+17 verbose linkMans test-workshopper@1.0.0
+18 verbose rebuildBundles test-workshopper@1.0.0
+19 verbose rebuildBundles [ '.DS_Store', 'adventure', 'workshopper' ]
+20 verbose rebuild bundle /Users/carlosalbertogoyenecheovalle/sites/workshopper/node_modules/adventure
+21 info build /Users/carlosalbertogoyenecheovalle/sites/workshopper/node_modules/adventure
+22 info preinstall adventure@2.10.0
+23 verbose linkStuff [ false,
+23 verbose linkStuff   false,
+23 verbose linkStuff   false,
+23 verbose linkStuff   '/Users/carlosalbertogoyenecheovalle/sites/workshopper/node_modules' ]
+24 info linkStuff adventure@2.10.0
+25 verbose linkBins adventure@2.10.0
+26 verbose linkMans adventure@2.10.0
+27 verbose rebuildBundles adventure@2.10.0
+28 verbose rebuildBundles [ '.bin',
+28 verbose rebuildBundles   'inherits',
+28 verbose rebuildBundles   'minimist',
+28 verbose rebuildBundles   'mkdirp',
+28 verbose rebuildBundles   'split',
+28 verbose rebuildBundles   'terminal-menu',
+28 verbose rebuildBundles   'through2',
+28 verbose rebuildBundles   'x256' ]
+29 info install adventure@2.10.0
+30 info postinstall adventure@2.10.0
+31 info install test-workshopper@1.0.0
+32 info postinstall test-workshopper@1.0.0
+33 info prepublish test-workshopper@1.0.0
+34 info build /usr/local/lib/node_modules/test-workshopper
+35 verbose linkStuff [ true,
+35 verbose linkStuff   '/usr/local/lib/node_modules',
+35 verbose linkStuff   true,
+35 verbose linkStuff   '/usr/local/lib/node_modules' ]
+36 info linkStuff test-workshopper@1.0.0
+37 verbose linkBins test-workshopper@1.0.0
+38 verbose link bins [ { 'node-adventure': 'runner.js' }, '/usr/local/bin', true ]
+39 verbose linkMans test-workshopper@1.0.0
+40 error Refusing to delete: /usr/local/bin/node-adventure not in /usr/local/lib/node_modules/test-workshopper
+File exists: /usr/local/bin/node-adventure
+Move it away, and try again.
+41 error System Darwin 14.0.0
+42 error command "node" "/usr/local/bin/npm" "link"
+43 error cwd /Users/carlosalbertogoyenecheovalle/sites/workshopper
+44 error node -v v0.10.35
+45 error npm -v 1.4.28
+46 error path /usr/local/bin/node-adventure
+47 error code EEXIST
+48 verbose exit [ 1, true ]

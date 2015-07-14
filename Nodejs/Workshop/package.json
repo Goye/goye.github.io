@@ -1,0 +1,18 @@
+{
+  "name": "test-workshopper",
+  "version": "1.0.0",
+  "description": "Test and learn!",
+  "bin": {
+    "node-runner": "runner.js"
+  },
+  "author": "Goye",
+  "keywords": [
+    "nodeschool",
+    "workshopper",
+    "fundamentals"
+  ],
+  "dependencies": {
+    "workshopper": "^2.6.0",
+    "workshopper-exercise": "^2.4.0"
+  }
+}
