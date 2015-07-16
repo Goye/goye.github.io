@@ -127,6 +127,11 @@ body {
 .reveal .controls div.navigate-down.enabled:hover {
   border-top-color: #78b9e6; }
 
+.highlight {
+  color: #FFFF00 !important;
+  font-family: monospace !important;
+}
+
 /*********************************************
  * PROGRESS BAR
  *********************************************/

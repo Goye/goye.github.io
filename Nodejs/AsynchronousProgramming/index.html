@@ -243,72 +243,215 @@
                 </section>
 
                 <section>
-                    <h3>Queue (Job / Storage)</h3>
+                    <h3>Queue / Events / EventEmitter</h3>
                     <p>
-                        A job queue contains an ordered list of jobs to be performed by a separate subsystem
+                        Single threaded non blocking IO model
                     </p>
                 </section>
 
                 <section>
-                    <h3>Using Kue.js (other options nodejs-queue / node-queue)</h3>
-                    <pre><code data-trim contenteditable>
-&nbsp;
-    // simple-queue.js
-    var kue = require(‘kue’);                                                    
-    var jobs = kue.createQueue(); 
-
-&nbsp;
-                    </code></pre>
-                    <pre><code data-trim contenteditable>
-&nbsp;
-    // simple-queue.js
-    function newJob (name){
-     name = name ? name : 'default';
-     var job = jobs.create('new job', {
-       name: name
-     });
-    ...
-&nbsp;
-                    </code></pre>
+                    Wait what? ...<br/>
+                    <img src="what.gif"></img>
                 </section>
 
                 <section>
-                    <h3>Adding event triggers / start processing</h3>
-                    <pre><code data-trim contenteditable>
-&nbsp;
-   ...
-      job
-      .on('complete', function (){
-        console.log('Job', job.id, 'with name', job.data.name, 'is    done');
-      })
-      .on('failed', function (){
-        console.log('Job', job.id, 'with name', job.data.name, 'has  failed');
-      });
-      job.save();
+                    <section>
+
+                    <h2>NodeJS event loop model</h2>
+                    <p>
+                        <ul>
+                        <li>Event driven programming</li>
+                        <li>Event loop single thread</li>
+                        <li>NodeJS uses a Libuv implementation</li>
+                        <li>Concurrency vs Parallelism</li>
+                        </ul>
+                    </p>
+                    </section>
+
+                    <section>
+
+                        <h2>NodeJS event loop model</h2>
+                        <p>
+                        <span class="highlight">Event-driven programming</span> is application flow control that is determined by events or changes in state. The general implementation is to have a central mechanism that listens for events and calls a callback function once an event has been detected
+                        </p>
+                        
+                    </section>
+
+                    <section>
+
+                        <h2>Event loop single thread</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+    // event.js
+    var events = require('events');
+    var eventEmitter = new events.EventEmitter();
+     
+    var ringBell = function ringBell()
+    {
+      console.log('ring ring so strong');
     }
-&nbsp;
-                    </code></pre>
-                    <pre><code data-trim contenteditable>
-&nbsp;
-    // simple-queue.js
-    jobs.process(‘new_job’, function (job, done){
-     console.log(‘Job’, job.id, ‘is done’);
-     done && done();
-    });
-&nbsp;
-                    </code></pre>
+    eventEmitter.on('doorOpen', ringBell);
+     
+    eventEmitter.emit('doorOpen');
+                        &nbsp;
+                        </code></pre>
+                        
+                    </section>
+
+                    <section>
+
+                        <h2>Libuv implementation</h2>
+                        <p>
+                        <span class="highlight">Libuv</span> is a multi-platform support library with a focus on asynchronous I/O (input/output non-blocking), provided by the supported OS (Unix, OS X and Windows at least), it's also used by Luvit, pyuv, julia, and others.
+                        </p>
+                        
+                    </section>
+
+                    <section>
+
+                        <h2>Example NodeJS Processing Model</h2>
+                        <img src="nodejs.png"></img>
+                        
+                    </section>
+
+                    <section>
+
+                        <h2>Concurrency vs Parallelism discussion</h2>
+                        <p>
+                        <q>"Everything runs in parallel except your code"</q> 
+                        </p>
+                    
+                    </section>
+
+                    <section>
+
+                        <h2>Concurrency vs Parallelism discussion</h2>
+                        <p>
+                        <q>"Hundreds of thousands open socket with a single thread concurrently by multiplexing and sequencing all your js logic in a single stream of execution"</q> 
+                        </p>
+                    
+                    </section>
                 </section>
 
                 <section>
-                    <h3>Testing our “new_job” queue</h3>
-                    <pre><code data-trim contenteditable>
-&nbsp;
-    setInterval(function (){
-      newJob('SendEmail');
-    }, 3000);
-&nbsp;
-                    </code></pre>
+
+                    <h2>Streams using NodeJS</h2>
+                    <p>
+                    Stream instances makes you easy to read, write or both data from a source and pipe it to a destination.
+                    </p>
+                
                 </section>
+
+                <section>
+
+                    <h2>Reading from streams</h2>
+                    <pre><code data-trim contenteditable>
+                    &nbsp;
+    // stream.js
+    var fs = require('fs');
+    var readableStream = fs.createReadStream('file.txt');
+    var data = '';
+
+    readableStream.on('data', function(bit){
+        data += bit;
+    });
+
+    readableStream.on('end', function() {
+        console.log(data);
+    });
+                    &nbsp;
+                    </code></pre>
+                    
+                </section>
+
+                    <section>
+
+                        <h2>Setting encoding</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+    // stream.js
+    var fs = require('fs');
+    var readableStream = fs.createReadStream('file.txt');
+    var data = '';
+     
+    readableStream.setEncoding('utf8');
+     
+    readableStream.on('data', function(bit) {
+        data += bit;
+    });
+     
+    readableStream.on('end', function() {
+        console.log(data);
+    });
+                        &nbsp;
+                        </code></pre>
+                        
+                    </section>
+
+                    <section>
+
+                        <h2>Pipe</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+    // stream.js
+    var fs = require('fs');
+    var readableStream = fs.createReadStream('file1.txt');
+    var writableStream = fs.createWriteStream('file2.txt');
+     
+    readableStream.pipe(writableStream);
+                        &nbsp;
+                        </code></pre>
+                        
+                    </section>
+
+                    <section>
+
+                        <h2>Pipe and chaining</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+    // stream.js
+    var fs = require('fs');
+    var zlib = require('zlib');
+     
+    fs.createReadStream('input.txt.gz')
+      .pipe(zlib.createGunzip())
+      .pipe(fs.createWriteStream('output.txt'));
+                        &nbsp;
+                        </code></pre>
+                        
+                    </section>
+
+                    <section>
+
+                        <h2>Writing to Streams</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+    // stream.js
+    var fs = require('fs');
+    var readableStream = fs.createReadStream('file1.txt');
+    var writableStream = fs.createWriteStream('file2.txt');
+     
+    readableStream.setEncoding('utf8');
+     
+    readableStream.on('data', function(bit) {
+        writableStream.write(bit);
+    });
+                        &nbsp;
+                        </code></pre>
+                        
+                    </section>
+
+                    <section>
+
+                        <h2>It's time to stream-adventure</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+    // from http://nodeschool.io/
+    npm install -g stream-adventure
+                        &nbsp;
+                        </code></pre>
+                        
+                    </section>
 
                 <section>
                 <h3>Thanks!</h3>
