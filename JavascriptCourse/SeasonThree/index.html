@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Javascript From Zero To Hero</title>
+
+        <meta name="description" content="Javascript From Zero To Hero">
+        <meta name="author" content="Goye">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h2>Javascript From Zero To Hero</h2>
+                    <h3>(Season Three)</h3>
+                    <p>
+                    <small>
+                      <a href="https://github.com/Goye/goye.github.io">
+                        https://github.com/Goye
+                      </a>
+                      /
+                      <a href="http://twitter.com/GoyeSays">
+                        @GoyeSays
+                      </a>
+                    </small>
+                    </p>
+                </section>
+                <section>
+                    <section>
+                        Check the exercise<br/>
+                        <img src="exercise.gif"></img>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Prototypal inheritance</h2>
+                        <p>
+                        some people think JavaScript is not a true object-oriented language. In "classic OO" languages, you tend to define class objects of some kind, and you can then simply define which classes inherit from which other classes (see C++ inheritance for some simple examples). JavaScript uses a different system — "inheriting" objects do not have functionality copied over to them, instead the functionality they inherit is linked to via the prototype chain (often referred to as prototypal inheritance).
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Example</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                        function Person(first, last, age) {
+                          this.name = {
+                            first,
+                            last
+                          };
+                          this.age = age;
+                        };
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Using prototype to add a new method</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                        Person.prototype.greeting = function() {
+                          alert('Hi! I\'m ' + this.name.first + '.');
+                        };
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        What about inheritance? How do we do that?<br/>
+                        <img src="how.gif"></img>
+                    </section>
+                    <section>
+                        <h2>Defining a Teacher constructor function</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                        function Teacher(first, last, age, subject) {
+                          Person.call(this, first, last, age, interests);
+
+                          this.subject = subject;
+                        }
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Call, Apply, Bind</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                var me = {firstName: 'Carlos', lastName: 'Goyeneche'};
+                var you = {firstName: 'John', lastName: 'Titor'};
+                function say(greeting) {
+                    console.log(greeting + ' ' +
+                    this.firstName + ' ' +
+                    this.lastName);
+                }
+                say.call(me, 'Hello');
+                say.apply(me, ['Hello']);
+                var sayHelloJohn = say.bind(you);
+                sayHelloJohn();
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Setting Teacher()'s prototype</h2>
+                        <p>Here our friend create() comes to the rescue again</p>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                Teacher.prototype = Object.create(Person.prototype);
+                Teacher.prototype.constructor = Teacher;
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Giving Teacher() a new greeting() function</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                Teacher.prototype.greeting = function() {
+                  var prefix;
+
+                  if (this.gender === 'male' || 
+                    this.gender === 'Male' || 
+                    this.gender === 'm' || 
+                    this.gender === 'M') {
+                    prefix = 'Mr.';
+                  } else if (this.gender === 'female' || 
+                  this.gender === 'Female' || 
+                  this.gender === 'f' || 
+                  this.gender === 'F') {
+                    prefix = 'Mrs.';
+                  } else {
+                    prefix = 'Mx.';
+                  }
+                  console.log('Hello. My name is ' + prefix + ' ' + this.name.last);
+                };
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    Woo, inheritance is so complicated<br/>
+                    <img src="go.gif"></img>
+                </section>
+                <section>
+                    <section>
+                        <h3>IIFE (Immediately Invoked Function Expression)</h3>
+                        <p>
+                           it's a JavaScript function that runs as soon as it is defined.
+                        </p>
+                    </section>
+                    <section>
+                        <h3>IIFE example</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                       // normal behavior
+                       function add(x,y) {
+                           var z = x + y;
+                           // do something with z
+                        }
+
+                        add(2,3);
+                        // IIFE
+                        (function(x ,y) {
+                           var z = x + y;
+                           // do something with z
+                        })(2,3);
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>IIFE Jquery example</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+       jQuery.noConflict(); //Disables the use of $ in the global scope
+        (function($) {
+
+           //Safely use $ inside this function
+           $('.link').click(function(e) {
+              //etc
+           });
+
+        })(jQuery);
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h3>Private properties & methods in Javascript</h3>
+                        <p>
+                            A common technique to implement private properties is to prefix each private property name with an underscore
+                        </p>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                        function Point(x, y) {
+                            this._x = x;
+                            this._y = y;
+                        }
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Using IIFE</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                        (function() {
+                          var world = '';
+
+                          function greeting () {
+                             alert('Hello: ' + world);
+                          }
+
+                          world = 'World';
+                          greeting();
+
+                          console.log('inside', world);
+                       })();
+
+                       console.log('outside', world);
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Using Closures</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                        function Greeting (world) {
+                            this.messsage = 'Hello:' + world;
+                        }
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h3>DOM</h3>
+                        <p>
+                            The Document Object Model (DOM) is a programming interface for HTML, XML and SVG documents. It provides a structured representation of the document as a tree
+                        </p>
+                    </section>
+                    <section>
+                        <h3>Dom tree</h3>
+                        <ul>
+                            <li>Content tree & Render tree</li>
+                            <li>Layout & Painting</li>
+                        </ul>
+                        <img src="Dom-tree.png"></img>
+                    </section>
+                    <section>
+                        <h3>Main flow</h3>
+                        <img src="flow.png"></img>
+                        <ul>
+                            <li>The rendering engine will start parsing the HTML document and turn the tags to DOM nodes in a tree called the "content tree". It will parse the style data, both in external CSS files and in style elements. The styling information together with visual instructions in the HTML will be used to create another tree - the render tree.</li>
+                            <li>The render tree contains rectangles with visual attributes like color and dimensions. The rectangles are in the right order to be displayed on the screen.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Main flow</h3>
+                        <img src="flow.png"></img>
+                        <ul>
+                            <li>
+                        After the construction of the render tree it goes through a "layout" process. This means giving each node the exact coordinates where it should appear on the screen. The next stage is painting - the render tree will be traversed and each node will be painted using the UI backend layer.</li>
+                        <li>For better user experience, the rendering engine will try to display contents on the screen as soon as possible. It will not wait until all HTML is parsed before starting to build and layout the render tree. Parts of the content will be parsed and displayed, while the process continues with the rest of the contents that keeps coming from the network.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>Typical error loading js files</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                        <!-- <html>
+                          <head>
+                           // this huge.js takes 10 seconds to download
+                            <script src="huge.js"></script>
+                          </head>
+                          <body>
+                            <div>
+                              Damn, this is hot!
+                            </div>
+                          </body>
+                        </html> -->
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Typical error loading js files</h3>
+                        <ul>
+                            <li>Download and execute JavaScripts will block HTML parsing</li>
+                            <li>Most browsers have "Speculative parsing" feature. If there are multiple JavaScript files, they will be downloaded simultaneous. However, they will still be executed sequential by the main thread.</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h3>Functional programming in javascript</h3>
+                        <ul>
+                            <li>First-class Function & Higher-Order Functions</li>
+                            <li>Map, filter, reduce</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h3>First-class Function & Higher-Order Functions</h3>
+                        <p>Those are functions that can return a function, pass a function as an argument or can be assigned as a value to a variable</p>
+                    </section>
+                    <section>
+                        <h3>Geek example</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+        var characters = [
+          { name: 'Alfred', occupation: 'Butler', villain: false},
+          { name: 'Batman', occupation: 'CEO of Wayne Enterprises', villain: false},
+          { name: 'Harley Quinn', occupation: 'Former psychiatrist', villain: true},
+          { name: 'Joker', occupation: 'Villain', villain: true}
+        ];
+        var villain = (character) => {
+          return character.villain;
+        };
+
+        var name = (character) => {
+          return character.name;
+        };
+
+        var villainNames = characters.filter(villain).map(name);
+        console.log(villainNames); // [ 'Harley Quinn', 'Joker' ]
+                         &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Map, Reduce, Filter</h3>
+                        <img src="food-example.png"></img>
+                    </section>
+                    <section>
+                        <h3>Map & reduce example!</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+        var characters = [
+          { name: 'Alfred', occupation: 'Butler', age: 70},
+          { name: 'Batman', occupation: 'CEO of Wayne Enterprises', age 40},
+          { name: 'Harley Quinn', occupation: 'Former psychiatrist', age: 29},
+          { name: 'Joker', occupation: 'Vilain', age: 35}
+        ];
+
+        var occupations = characters.map((character) => {
+          return character.occupation;
+        });
+
+        console.log(occupations);
+                         &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Map & reduce example!</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+        var characters = [
+          { name: 'Alfred', occupation: 'Butler', age: 70},
+          { name: 'Batman', occupation: 'CEO of Wayne Enterprises', age 40},
+          { name: 'Harley Quinn', occupation: 'Former psychiatrist', age: 29},
+          { name: 'Joker', occupation: 'Vilain', age: 35}
+        ];
+
+        var totalAge = characters.reduce((sum, character) => {
+          return sum + character.age;
+        }, 0);
+
+        console.log(totalAge);
+
+        var charactersObject = characters.reduce((array, character) => {
+          array.push(character.name);
+          return array;
+        }, [])
+
+        console.log(charactersObject);
+                         &nbsp;
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                <h3>Thanks!</h3>
+                <a href="https://github.com/Goye/goye.github.io">
+                https://github.com/Goye
+                </a>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                margin: 0,
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
