@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Javascript From Zero To Hero</title>
+
+        <meta name="description" content="Javascript From Zero To Hero">
+        <meta name="author" content="Goye">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <link rel="stylesheet" href="css/reveal.min.css">
+        <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+        <!-- For syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+        <script>
+            document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h2>Javascript From Zero To Hero</h2>
+                    <h3>(Season Five)</h3>
+                    <p>
+                    <small>
+                      <a href="https://github.com/Goye/goye.github.io">
+                        https://github.com/Goye
+                      </a>
+                      /
+                      <a href="http://twitter.com/GoyeSays">
+                        @GoyeSays
+                      </a>
+                    </small>
+                    </p>
+                </section>
+                <section>
+                    <section>
+                        Our last class, I was glad to meet you guys<br/>
+                        <img src="sad.gif"></img>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        So...Forget everything, it's a new world<br/>
+                        <img src="wow.gif"></img>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Arrows and Lexical This</h2>
+                        <p>
+                        Arrows are a function shorthand using the => syntax. They are syntactically similar to the related feature in C#, Java 8 and CoffeeScript. They support both expression and statement bodies. Unlike functions, arrows share the same lexical this as their surrounding code. If an arrow is inside another function, it shares the “arguments” variable of its parent function.
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Example</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+       //Self demo example
+       var selfDemo = {
+          _wakeUp: "7",
+          _mates: [1, 2],
+          beAwesome() {
+            this._mates.forEach(function() {
+                console.log(this._wakeUp);
+            })
+          }
+        }
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Example</h2>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+       //Self demo example
+       var selfDemo = {
+          _wakeUp: "7",
+          _mates: [1, 2],
+          beAwesome() {
+            this._mates.forEach(() => console.log(this._wakeUp))
+          }
+        }
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Classes</h2>
+                    <p>ES2015 classes are a simple sugar over the prototype-based OO pattern. Having a single convenient declarative form makes class patterns easier to use, and encourages interoperability. Classes support prototype-based inheritance, super calls, instance and static methods and constructors.</p>
+                </section>
+                <section>
+                    <section>
+                        <h3>Prototype Methods</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+       class Rectangle {
+          constructor(height, width) {
+            this.height = height;
+            this.width = width;
+          }
+      
+          get area() {
+            return this.calcArea();
+          }
+
+          calcArea() {
+            return this.height * this.width;
+          }
+        }
+
+        const square = new Rectangle(10, 10);
+
+        console.log(square.area);
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Static methods</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+       class Point {
+          constructor(x, y) {
+            this.x = x;
+            this.y = y;
+          }
+
+          static distance(a, b) {
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+
+            return Math.sqrt(dx*dx + dy*dy);
+          }
+        }
+
+        const p1 = new Point(5, 5);
+        const p2 = new Point(10, 10);
+
+        console.log(Point.distance(p1, p2));
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Extend and super</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                class Cat {
+                  constructor(name) {
+                    this.name = name;
+                  }
+
+                  speak() {
+                    console.log(this.name + ' makes a noise.');
+                  }
+                }
+
+                class Lion extends Cat {
+                  speak() {
+                    super.speak();
+                    console.log(this.name + ' roars.');
+                  }
+                }
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h3>Template Strings</h3>
+                        <p>
+                            Template strings provide syntactic sugar for constructing strings. This is similar to string interpolation features in Perl, Python and more. Optionally, a tag can be added to allow the string construction to be customized, avoiding injection attacks or constructing higher level data structures from string contents.
+                        </p>
+                    </section>
+                    <section>
+                        <h3>Example</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                        // Basic literal string creation
+                        `This is a pretty little template string.`
+
+                        // Multiline strings
+                        `In ES5 this is
+                         not legal.`
+
+                        // Interpolate variable bindings
+                        var name = "Bob", time = "today";
+                        `Hello ${name}, how are you ${time}?`
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h3>Destructuring</h3>
+                        <p>
+                            Destructuring allows binding using pattern matching, with support for matching arrays and objects. Destructuring is fail-soft, similar to standard object lookup foo["bar"], producing undefined values when not found.
+                        </p>
+                    </section>
+                    <section>
+                        <h3>Example</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+        // list matching
+        var [a, ,b] = [1,2,3];
+        a === 1;
+        b === 3;
+
+        // object matching
+        var { op: a, lhs: { op: b }, rhs: c }
+               = getASTNode()
+
+        // object matching shorthand
+        // binds `op`, `lhs` and `rhs` in scope
+        var {op, lhs, rhs} = getASTNode()
+
+        // Can be used in parameter position
+        function g({name: x}) {
+          console.log(x);
+        }
+        g({name: 5})
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h3>Default + Rest + Spread</h3>
+                        <p>Callee-evaluated default parameter values. Turn an array into consecutive arguments in a function call. Bind trailing parameters to an array. Rest replaces the need for arguments and addresses common cases more directly.</p>
+                    </section>
+                    <section>
+                        <h3>Example</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+        function f(x, y=12) {
+          // y is 12 if not passed (or passed as undefined)
+          return x + y;
+        }
+        f(3) == 15
+        function f(x, ...y) {
+          // y is an Array
+          return x * y.length;
+        }
+        f(3, "hello", true) == 6
+        function f(x, y, z) {
+          return x + y + z;
+        }
+        // Pass each elem of array as argument
+        f(...[1,2,3]) == 6
+                        &nbsp;
+                        </code></pre>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h3>Let + Const</h3>
+                        <img src="know.gif"></img>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h3>Modules</h3>
+                        <p>Language-level support for modules for component definition. Codifies patterns from popular JavaScript module loaders (AMD, CommonJS). Runtime behaviour defined by a host-defined default loader. Implicitly async model – no code executes until requested modules are available and processed.</p>
+                    </section>
+                    <section>
+                        <h3>Example</h3>
+                        <pre><code data-trim contenteditable>
+                        &nbsp;
+                // lib/mathplusplus.js
+                export * from "lib/math";
+                export var e = 2.71828182846;
+                export default function(x) {
+                    return Math.exp(x);
+                }
+
+                // app.js
+                import * as math from "lib/math";
+
+                // otherApp.js
+                import {sum, pi} from "lib/math";
+                console.log("2π = " + sum(pi, pi));
+                        &nbsp;
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                <h3>Thanks!</h3>
+                <a href="https://github.com/Goye/goye.github.io">
+                https://github.com/Goye
+                </a>
+                </section>
+
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.min.js"></script>
+
+        <script>
+
+            // Full list of configuration options available here:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                margin: 0,
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+                transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+                // Optional libraries used to extend on reveal.js
+                dependencies: [
+                    { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                    { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
