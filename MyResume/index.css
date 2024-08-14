@@ -3053,7 +3053,7 @@ body,html {
   display: flex;
   flex-direction: column;
   background: #fff;
-  word-wrap: break-word
+  word-wrap: break-word;
 }
 
 ._columns_kqff7_11 {
@@ -4139,9 +4139,9 @@ body,html {
   --font-body: var(--font-2);
   --density-value: var(--density-factor, 1);
   --scale-value: var(--scale-factor, 1);
-  padding: 44px 46px;
+  padding: 0 46px;
   font-family: var(--font-body);
-  font-size: calc(11px * var(--scale-value));
+  font-size: calc(12px * var(--scale-value));
   line-height: calc(1.45 * var(--density-value));
   color: var(--color-foreground);
   background-color: var(--color-background);
@@ -4149,7 +4149,7 @@ body,html {
 }
 
 ._page_hb8b3_1._firstPage_hb8b3_17 {
-  padding-top: 30px
+  padding-top: 30px;
 }
 
 ._columns_8hq0n_1 {
@@ -8305,4 +8305,8 @@ body,html {
 
 ._withRadius_zcchx_14>*>[data-page-index] {
   border-radius: 4px
+}
+
+.page-break {
+  page-break-before: always;
 }
